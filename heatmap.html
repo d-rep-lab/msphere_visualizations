@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Carbon Source Utilization Heatmap</title>
+  <link rel="stylesheet" href="./css/heatmap.css">
+  <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+</head>
+
+<body>
+
+  <header>
+    <h1>Carbon Source Utilization Heatmap</h1>
+    <p>Pneumococcal strains</p>
+  </header>
+
+  <div id="wrap">
+    <div class="legend-row">
+      <span>Low</span>
+      <svg id="legend-svg" width="160" height="12" style="display:block"></svg>
+      <span>High</span>
+    </div>
+    <div class="panel" id="chart"></div>
+  </div>
+
+  <div id="tooltip">
+    <div class="title" id="ttTitle"></div>
+    <div class="meta" id="ttMeta"></div>
+    <svg id="ttSvg" width="270" height="135"></svg>
+  </div>
+
+  <script src="./js/heatmap_main.js"></script>
+</body>
+
+</html>

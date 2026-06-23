@@ -1,0 +1,326 @@
+:root {
+  --bg: #ffffff;
+  --panel: #f5f6f8;
+  --text: #111111;
+  --muted: #6b7280;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+header {
+  padding: 16px 18px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+header h1 {
+  margin: 0 0 6px;
+  font-size: 16px;
+  font-weight: 650;
+}
+
+header p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+#app {
+  display: flex;
+  flex: 1;
+  gap: 0;
+  min-height: 0;
+}
+
+/* ── Controls ── */
+#controls {
+  width: 240px;
+  min-width: 200px;
+  background: #fff;
+  border-right: 1px solid #dde3ee;
+  padding: 18px 14px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.ctrl-section h3 {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #6b7a99;
+  margin-bottom: 8px;
+}
+
+.ctrl-section h3 .sub {
+  font-weight: 400;
+  font-size: 0.68rem;
+}
+
+/* Selected strain tags */
+#selected-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.strain-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 8px;
+  border-radius: 20px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #fff;
+  cursor: default;
+}
+
+.strain-tag .remove-btn {
+  cursor: pointer;
+  font-size: 0.9rem;
+  opacity: 0.75;
+  line-height: 1;
+  background: none;
+  border: none;
+  color: inherit;
+  padding: 0;
+}
+
+.strain-tag .remove-btn:hover {
+  opacity: 1;
+}
+
+/* Strain checkboxes */
+#strain-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.strain-check {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 6px;
+  border-radius: 6px;
+  font-size: 0.82rem;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.strain-check:hover {
+  background: #f0f3fa;
+}
+
+.strain-check input[type=checkbox] {
+  accent-color: #4a7cdc;
+  width: 14px;
+  height: 14px;
+}
+
+.strain-check.disabled {
+  opacity: 0.45;
+  pointer-events: none;
+}
+
+/* Sliders */
+.slider-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.slider-row input[type=range] {
+  flex: 1;
+  accent-color: #4a7cdc;
+  height: 4px;
+}
+
+#od-val {
+  font-size: 0.8rem;
+  font-weight: 600;
+  min-width: 34px;
+  text-align: right;
+  color: #4a7cdc;
+}
+
+#time-val {
+  font-size: 0.8rem;
+  font-weight: 600;
+  min-width: 34px;
+  text-align: right;
+  color: #4a7cdc;
+}
+
+/* ── Diagram area ── */
+#diagram-area {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  padding: 20px;
+}
+
+#venn-svg {
+  width: 100%;
+  height: 100%;
+  max-width: 700px;
+  max-height: 620px;
+}
+
+/* Venn circles */
+.venn-circle {
+  opacity: 0.42;
+  transition: opacity 0.2s;
+}
+
+.venn-region-hit {
+  fill: transparent;
+  stroke: none;
+  cursor: pointer;
+}
+
+.venn-region-hit:hover {
+  fill: rgba(255, 255, 255, 0.22);
+}
+
+.venn-region-hit.active {
+  fill: rgba(255, 255, 255, 0.35);
+}
+
+.region-label {
+  pointer-events: none;
+  font-size: 15px;
+  font-weight: 700;
+  fill: #fff;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+  text-anchor: middle;
+  dominant-baseline: central;
+}
+
+
+.strain-label {
+  pointer-events: none;
+  font-size: 13px;
+  font-weight: 700;
+  fill: #1a2236;
+  text-anchor: middle;
+  dominant-baseline: central;
+}
+
+/* Grey null overlay */
+.null-overlay {
+  fill: #c8cfd9;
+  opacity: 0.85;
+  pointer-events: none;
+}
+
+/* Hover tooltip */
+#region-tooltip {
+  position: absolute;
+  background: rgba(26, 34, 54, 0.92);
+  color: #fff;
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 0.8rem;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.15s;
+  white-space: nowrap;
+  z-index: 10;
+  max-width: 280px;
+}
+
+#region-tooltip.visible {
+  opacity: 1;
+}
+
+/* Click substrate panel */
+#substrate-panel {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  width: 300px;
+  max-height: 420px;
+  background: #fff;
+  border: 1px solid #dde3ee;
+  border-radius: 10px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.14);
+  display: flex;
+  flex-direction: column;
+  z-index: 100;
+  overflow: hidden;
+}
+
+#substrate-panel.hidden {
+  display: none;
+}
+
+#substrate-panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  background: #f0f3fa;
+  border-bottom: 1px solid #dde3ee;
+}
+
+#substrate-panel-title {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #1a2236;
+}
+
+#substrate-panel-close {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  color: #6b7a99;
+  line-height: 1;
+}
+
+#substrate-panel-close:hover {
+  color: #e05a5a;
+}
+
+#substrate-list {
+  list-style: none;
+  overflow-y: auto;
+  padding: 8px 0;
+  flex: 1;
+}
+
+#substrate-list li {
+  padding: 5px 14px;
+  font-size: 0.8rem;
+  border-bottom: 1px solid #f0f3fa;
+  color: #2d3a57;
+}
+
+#substrate-list li:last-child {
+  border-bottom: none;
+}
+
+#substrate-list li.empty-msg {
+  color: #aaa;
+  font-style: italic;
+}

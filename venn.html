@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Carbon Source Venn Diagram</title>
+  <link rel="stylesheet" href="./css/venn.css">
+  <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+</head>
+
+<body>
+
+  <header>
+    <h1>Carbon Source Utilization — Venn Diagram</h1>
+    <p>Pneumococcal strains</p>
+  </header>
+
+  <div id="app">
+
+    <!-- LEFT: Controls -->
+    <aside id="controls">
+
+      <section class="ctrl-section">
+        <h3>Selected Strains <span class="sub">(2–3)</span></h3>
+        <div id="selected-tags"></div>
+      </section>
+
+      <section class="ctrl-section">
+        <h3>Add Strain</h3>
+        <div id="strain-list"></div>
+      </section>
+
+      <section class="ctrl-section">
+        <h3>OD Threshold</h3>
+        <div class="slider-row">
+          <input type="range" id="od-slider" min="0.05" max="1.0" step="0.05" value="0.3">
+          <span id="od-val">0.30</span>
+        </div>
+      </section>
+
+      <section class="ctrl-section">
+        <h3>Time Cutoff <span class="sub">(hours)</span></h3>
+        <div class="slider-row">
+          <input type="range" id="time-slider" min="0" max="119" step="1" value="119">
+          <span id="time-val">60.0</span>
+        </div>
+      </section>
+
+    </aside>
+
+    <!-- RIGHT: Diagram -->
+    <main id="diagram-area">
+      <svg id="venn-svg"></svg>
+      <div id="region-tooltip"></div>
+    </main>
+
+  </div>
+
+  <!-- Click panel: substrate list -->
+  <div id="substrate-panel" class="hidden">
+    <div id="substrate-panel-header">
+      <span id="substrate-panel-title"></span>
+      <button id="substrate-panel-close">✕</button>
+    </div>
+    <ul id="substrate-list"></ul>
+  </div>
+
+  <script src="./js/venn_main.js"></script>
+</body>
+
+</html>

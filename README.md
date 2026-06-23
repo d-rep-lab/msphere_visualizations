@@ -15,18 +15,21 @@ Two scripts in `scripts/` generate the JSON data files consumed by the visualiza
 
 | Script | Output | Used by |
 |--------|--------|---------|
-| `generate_json.py` | `data/carbon_heatmap_data.json` | `index.html` (heatmap) |
-| `generate_venn_data.py` | `data/venn_data.json` | `venn.html` (Venn diagram) |
+| `generate_heatmap_json.py` | `data/heatmap.json` | `heatmap.html` (heatmap) |
+| `generate_venn_json.py` | `data/venn.json` | `venn.html` (Venn diagram) |
 
-To regenerate the JSON after updating the workbook:
+The heatmap script uses both sheets; the Venn script uses only Sheet1.
+
+To regenerate the JSON after updating the workbook, run the scripts from the `scripts/` directory (paths are relative):
 
 ```bash
 pip install openpyxl
-python scripts/generate_json.py
-python scripts/generate_venn_data.py
+cd scripts
+python generate_heatmap_json.py
+python generate_venn_json.py
 ```
 
-`generate_json.py` prints a summary line (`N strains × M carbons = K cells`) and logs any rows it couldn't parse to stderr.
+`generate_heatmap_json.py` prints a summary line (`N strains x M carbons = K cells → path`) and logs any rows it couldn't parse to stderr.
 
 ## Running locally
 
@@ -38,17 +41,17 @@ python -m http.server 8000
 
 Then open in your browser:
 
-- [http://localhost:8000](http://localhost:8000) — Heatmap (`index.html`)
+- [http://localhost:8000/heatmap.html](http://localhost:8000/heatmap.html) — Heatmap
 - [http://localhost:8000/venn.html](http://localhost:8000/venn.html) — Venn diagram
 
 ## Visualizations
 
 Both are built with [D3.js](https://d3js.org).
 
-### Heatmap (`index.html`)
+### Heatmap (`heatmap.html`)
 
 - **Color scale** — Viridis, mapped to the global min/max peak OD across all strain/carbon combinations.
-- **Cell labels** — Peak OD values are printed inside each cell when cells are large enough (≥ 18 px).
+- **Cell labels** — Peak OD values are printed inside each cell when cells are large enough (>= 18 px).
 - **Tooltip** — Hovering over a cell shows the full OD growth curve for that strain/carbon combination, including the peak timepoint.
 
 ### Venn Diagram (`venn.html`)
